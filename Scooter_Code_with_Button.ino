@@ -5,6 +5,7 @@
 #define NUM_LEDS  21
 #define LED_PIN   6
 #define BTN_PIN   3
+#define BRIGHTNESS 200
 
 CRGB leds[NUM_LEDS];
 uint8_t patternCounter = 0;
@@ -21,7 +22,7 @@ OneButton btn = OneButton(BTN_PIN, true, true);
 
 void setup() {
   FastLED.addLeds<WS2812B, LED_PIN, GRB>(leds, NUM_LEDS);
-  FastLED.setBrightness(50);
+  FastLED.setBrightness(BRIGHTNESS);
   Serial.begin(57600);
 
   btn.attachClick(nextPattern);
@@ -29,6 +30,12 @@ void setup() {
 }
 
 void loop() {
+  if (isLongPressed = true) {
+    stopPattern();
+    isRunning = false;
+    FastLED.setBrightness(0);
+  }
+  FastLED.setBrightness(BRIGHTNESS);
   switch (patternCounter) {
     case 0:
       runMovingDot();
@@ -54,8 +61,9 @@ void stopPattern() {
 //  delay(1000);
   if (isLongPressed = true){
     FastLED.clear();
+    FastLED.setBrightness(0);
     FastLED.show();
-//    isRunning = false;
+    btn.tick();
   }
 }
 
